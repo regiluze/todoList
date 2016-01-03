@@ -12,9 +12,14 @@
 (def tasks (sel1 :#tasks))
 
 (defn deleteTask [evt]
-  (let [atxt (-> evt (.-currentTarget) dommy/text) ]
-     (.log js/console "kaixo"))
+  (let [atxt (-> evt (.-currentTarget) dommy/value) ]
+     (.log js/console atxt))
   )
+
+(defn taskIndex! []
+  (let [tasks (dommy/sel1 "#tasks") ]
+     (.-childElementCount tasks)
+  ))
 
 (defn textElement [text]
   (let [el (dommy/create-element :span)]
@@ -23,6 +28,7 @@
 (defn buttonElement [name]
   (let [el (dommy/create-element :button)]
           (dommy/set-text! el "Delete")
+          (dommy/set-value! el (taskIndex!))
           (dommy/listen! el :click deleteTask)))
 
 (defn create [name priority]
